@@ -83,7 +83,7 @@ namespace WiFiDirectDeviceScenario
                     chosenDevInfo = devInfoCollection[FoundDevicesList.SelectedIndex];
                 }
 
-                rootPage.NotifyUser("Connecting to " + chosenDevInfo.Name + "....", NotifyType.StatusMessage);
+                rootPage.NotifyUser("Connecting to " + chosenDevInfo.Name + "(" + chosenDevInfo.Id + ")" + "....", NotifyType.StatusMessage);
 
 
                 // Connect to the selected WiFiDirect device
@@ -156,7 +156,7 @@ namespace WiFiDirectDeviceScenario
 
                 FoundDevicesList.Items.Clear();
 
-                String deviceSelector = Windows.Devices.WiFiDirect.WiFiDirectDevice.GetDeviceSelector();
+                String deviceSelector = Windows.Devices.WiFiDirect.WiFiDirectDevice.GetDeviceSelector(WiFiDirectDeviceSelectorType.AssociationEndpoint);
                 devInfoCollection = await DeviceInformation.FindAllAsync(deviceSelector);
                 if (devInfoCollection.Count == 0)
                 {
@@ -172,7 +172,6 @@ namespace WiFiDirectDeviceScenario
                     FoundDevicesList.Visibility = Visibility.Visible;
                     ConnectButton.Visibility = Visibility.Visible;
 
-                    rootPage.NotifyUser("Enumerating WiFiDirect devices completed successfully.", NotifyType.StatusMessage);
                 }
             }
             catch (Exception err)
